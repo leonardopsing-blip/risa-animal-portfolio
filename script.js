@@ -1,7 +1,12 @@
 const gate = document.querySelector('.entry-gate');
 const enterControls = document.querySelectorAll('.intro-cat, .enter-button');
 const cursor = document.querySelector('.cursor-orbit');
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const progress = document.querySelector('.scroll-progress span');
+const topbar = document.querySelector('.topbar');
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const floats = [...document.querySelectorAll('[data-float]')];
+let pointer = { x: .5, y: .5 };
+let ticking = false;
 
 function enterSite() {
   if (!gate || gate.classList.contains('is-leaving')) return;
@@ -10,14 +15,36 @@ function enterSite() {
   window.setTimeout(() => gate.setAttribute('aria-hidden', 'true'), 1100);
 }
 
-if (reduceMotion) enterSite();
+if (reduced) enterSite();
 else {
   enterControls.forEach((control) => control.addEventListener('click', enterSite));
-  window.setTimeout(enterSite, 3200);
+  window.setTimeout(enterSite, 3600);
 }
 
-window.addEventListener('pointermove', (event) => {
-  if (cursor) cursor.style.transform = `translate3d(${event.clientX - 72}px,${event.clientY - 72}px,0)`;
+function paintMotion() {
+  ticking = false;
+  const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  const scroll = scrollY;
+  const ratio = scroll / max;
+  if (progress) progress.style.setProperty('--progress', ratio.toFixed(4));
+  topbar?.classList.toggle('is-scrolled', scroll > 22);
+  if (!reduced) {
+    floats.forEach((node) => {
+      const speed = Number(node.dataset.float || 0);
+      const shift = Math.max(-70, Math.min(70, scroll * speed));
+      node.style.setProperty('--scroll-shift', `${shift}px`);
+      node.style.transform = `translate3d(0,var(--scroll-shift),0)`;
+    });
+  }
+}
+function requestPaint() { if (!ticking) { ticking = true; requestAnimationFrame(paintMotion); } }
+addEventListener('scroll', requestPaint, { passive: true });
+addEventListener('resize', requestPaint, { passive: true });
+requestPaint();
+
+addEventListener('pointermove', (event) => {
+  pointer = { x: event.clientX / innerWidth, y: event.clientY / innerHeight };
+  if (cursor && !reduced) cursor.style.transform = `translate3d(${event.clientX - 72}px,${event.clientY - 72}px,0)`;
 }, { passive: true });
 
 const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
@@ -37,12 +64,24 @@ document.querySelectorAll('[data-split]').forEach((heading) => {
   });
 });
 
-document.querySelectorAll('[data-tilt]').forEach((card) => {
-  card.addEventListener('pointermove', (event) => {
-    const box = card.getBoundingClientRect();
-    const x = (event.clientX - box.left) / box.width - .5;
-    const y = (event.clientY - box.top) / box.height - .5;
-    card.style.transform = `rotate(${4 + x * 5}deg) translate3d(${x * 10}px,${y * 10}px,0)`;
+if (!reduced) {
+  document.querySelectorAll('[data-tilt]').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      const box = card.getBoundingClientRect();
+      const x = (event.clientX - box.left) / box.width - .5;
+      const y = (event.clientY - box.top) / box.height - .5;
+      card.style.setProperty('--tilt-x', `${x * 13}px`);
+      card.style.setProperty('--tilt-y', `${y * 13}px`);
+    });
+    card.addEventListener('pointerleave', () => { card.style.setProperty('--tilt-x', '0px'); card.style.setProperty('--tilt-y', '0px'); });
   });
-  card.addEventListener('pointerleave', () => card.style.transform = 'rotate(4deg)');
-});
+  document.querySelectorAll('.magnetic').forEach((node) => {
+    node.addEventListener('pointermove', (event) => {
+      const box = node.getBoundingClientRect();
+      const x = (event.clientX - box.left) / box.width - .5;
+      const y = (event.clientY - box.top) / box.height - .5;
+      node.style.transform = `translate3d(${x * 7}px,${y * 7}px,0)`;
+    });
+    node.addEventListener('pointerleave', () => { node.style.transform = ''; });
+  });
+}

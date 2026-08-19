@@ -6,6 +6,8 @@ const css = readFileSync(new URL('./style.css', import.meta.url), 'utf8');
 const kinetic = readFileSync(new URL('./kinetic.css', import.meta.url), 'utf8');
 const blanca = readFileSync(new URL('./blanca.css', import.meta.url), 'utf8');
 const editorial = readFileSync(new URL('./editorial.css', import.meta.url), 'utf8');
+const choreography = readFileSync(new URL('./choreography.css', import.meta.url), 'utf8');
+const script = readFileSync(new URL('./script.js', import.meta.url), 'utf8');
 
 assert.match(html, /RisAnimal — Emily Peñafiel/);
 assert.match(html, /entry-gate/);
@@ -22,6 +24,8 @@ assert.match(html, /ARCHIVO INTERIOR/);
 assert.match(html, /Todo empezó/);
 assert.match(html, /data-blanca-cameo/);
 assert.match(html, /editorial\.css/);
+assert.match(html, /choreography\.css/);
+assert.match(choreography, /blanca-guide::after/);
 assert.match(html, /ambient-scene/);
 assert.match(html, /scroll-progress/);
 assert.match(html, /Mueblería/);
@@ -38,5 +42,10 @@ assert.match(editorial, /mapping-case/);
 assert.match(editorial, /archive-journal/);
 assert.match(kinetic, /ambient-scene/);
 assert.match(kinetic, /prefers-reduced-motion/);
+assert.match(choreography, /blanca-walk/);
+assert.match(choreography, /blanca-leap/);
+assert.match(choreography, /prefers-reduced-motion/);
+assert.match(script, /blancaStations/);
+assert.match(script, /resolveBlancaStation/);
 
 console.log('Validación independiente de RisAnimal: correcta');

@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+
+const html = readFileSync(new URL('./index.html', import.meta.url), 'utf8');
+const css = readFileSync(new URL('./style.css', import.meta.url), 'utf8');
+const kinetic = readFileSync(new URL('./kinetic.css', import.meta.url), 'utf8');
+const blanca = readFileSync(new URL('./blanca.css', import.meta.url), 'utf8');
+const editorial = readFileSync(new URL('./editorial.css', import.meta.url), 'utf8');
+
+assert.match(html, /RisAnimal — Emily Peñafiel/);
+assert.match(html, /entry-gate/);
+assert.match(html, /Miau/);
+assert.match(html, /Hola, soy Blanca la gata de Emy, te guiaré por el arte y la creatividad de mi dueña/);
+assert.match(html, /blanca-guide/);
+assert.match(html, /blanca-character/);
+assert.match(html, /blanca-spot/);
+assert.match(html, /MATERIALIDADES/);
+assert.match(html, /Nido de señales/);
+assert.match(html, /OBRA SENSORIAL/);
+assert.match(html, /DMgasw7vCHC/);
+assert.match(html, /ARCHIVO INTERIOR/);
+assert.match(html, /Todo empezó/);
+assert.match(html, /data-blanca-cameo/);
+assert.match(html, /editorial\.css/);
+assert.match(html, /ambient-scene/);
+assert.match(html, /scroll-progress/);
+assert.match(html, /Mueblería/);
+assert.match(html, /Escuela de Música/);
+assert.match(html, /LPS(?:<br\/?\>|\s*)Worship/);
+assert.doesNotMatch(html, /lpsportfolio-7ynhmebl/);
+assert.doesNotMatch(html, /\/risa-animal/);
+assert.doesNotMatch(html, /risanimal\.blogspot/);
+assert.match(css, /prefers-reduced-motion/);
+assert.match(css, /cursor-orbit/);
+assert.match(blanca, /blanca-guide/);
+assert.match(blanca, /blanca-gray/);
+assert.match(editorial, /mapping-case/);
+assert.match(editorial, /archive-journal/);
+assert.match(kinetic, /ambient-scene/);
+assert.match(kinetic, /prefers-reduced-motion/);
+
+console.log('Validación independiente de RisAnimal: correcta');

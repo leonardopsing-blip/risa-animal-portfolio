@@ -16,6 +16,9 @@ assert.match(html, /Hola, soy Blanca la gata de Emy, te guiaré por el arte y la
 assert.match(html, /blanca-guide/);
 assert.match(html, /blanca-character/);
 assert.match(html, /blanca-spot/);
+assert.match(html, /blanca-motion-body/);
+assert.match(html, /blanca-motion-head/);
+assert.match(html, /blanca-leg--front-left/);
 assert.match(html, /MATERIALIDADES/);
 assert.match(html, /Nido de señales/);
 assert.match(html, /OBRA SENSORIAL/);
@@ -42,10 +45,12 @@ assert.match(editorial, /mapping-case/);
 assert.match(editorial, /archive-journal/);
 assert.match(kinetic, /ambient-scene/);
 assert.match(kinetic, /prefers-reduced-motion/);
-assert.match(choreography, /blanca-walk/);
-assert.match(choreography, /blanca-leap/);
+assert.match(choreography, /blanca-trot-body/);
+assert.match(choreography, /blanca-trot-tail/);
+assert.match(choreography, /blanca-leg-a/);
 assert.match(choreography, /prefers-reduced-motion/);
 assert.match(script, /blancaStations/);
 assert.match(script, /resolveBlancaStation/);
+assert.match(script, /announceBlanca/);
 
 console.log('Validación independiente de RisAnimal: correcta');

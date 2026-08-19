@@ -11,8 +11,8 @@ const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const floats = [...document.querySelectorAll('[data-float]')];
 const blancaStations = [
   { id: 'inicio', selector: '#inicio', x: 84, y: 74, facing: -1, note: 'Aquí empieza la libreta de Emy: imágenes que se quedan mirando.' },
-  { id: 'manifesto', selector: '.manifesto', x: 13, y: 72, facing: 1, note: 'Una idea comienza cuando le hacemos un lugar.' },
-  { id: 'obra', selector: '#obra', x: 83, y: 68, facing: -1, note: 'Voy caminando entre las imágenes para mirar sus detalles contigo.' },
+  { id: 'manifesto', selector: '.manifesto', x: 84, y: 70, facing: -1, note: 'Una idea comienza cuando le hacemos un lugar.' },
+  { id: 'obra', selector: '#obra', x: 81, y: 80, facing: -1, note: 'Voy caminando entre las imágenes para mirar sus detalles contigo.' },
   { id: 'mapping', selector: '#mapping', x: 12, y: 64, facing: 1, note: 'Aquí salto cerca de la luz: la imagen también puede ocupar el espacio.' },
   { id: 'archivo', selector: '#archivo', x: 82, y: 72, facing: -1, note: 'Bajo despacito al archivo para cuidar estas notas.' },
   { id: 'materialidades', selector: '#materialidades', x: 14, y: 70, facing: 1, note: 'Sigo el hilo: el material también sabe guiar el camino.' },
